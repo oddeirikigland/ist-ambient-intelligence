@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Weather from "./components/weather";
+import ClockComp from "./components/clock";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="wrapper">
+        <div className="one">
+          <ClockComp />
+        </div>
+        <div className="two">
+          <Weather />
+        </div>
+        <div className="three">Three</div>
+        <div className="four">Four</div>
+        <div className="five">Five</div>
+        <div className="six">Six</div>
+        <div className="seven">Seven</div>
+        <div className="eight">Eight</div>
+        <div className="nine">Nine</div>
+      </div>
     </div>
   );
 }
