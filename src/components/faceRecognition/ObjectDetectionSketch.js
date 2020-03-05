@@ -1,9 +1,12 @@
-import * as p5 from "p5";
+//import * as p5 from "p5";
 // import "p5/lib/addons/p5.dom";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as faceapi from "face-api.js";
 
 const MODEL_URL = "/models";
+const HEIGHT = 200;
+const WIDTH = HEIGHT * 1.7778;
+const TEXT_SIZE = 15;
 
 export default function sketch(p) {
   let capture = null;
@@ -25,12 +28,12 @@ export default function sketch(p) {
     await faceapi.loadAgeGenderModel(MODEL_URL);
     await faceapi.loadFaceExpressionModel(MODEL_URL);
 
-    p.createCanvas(1280, 720);
+    p.createCanvas(WIDTH, HEIGHT);
     const constraints = {
       video: {
         mandatory: {
-          minWidth: 1280,
-          minHeight: 720
+          minWidth: WIDTH,
+          minHeight: HEIGHT
         },
         optional: [{ maxFrameRate: 40 }]
       },
@@ -40,7 +43,7 @@ export default function sketch(p) {
     capture = p.createCapture(constraints, () => {});
 
     capture.id("video_element");
-    capture.size(1280, 720);
+    capture.size(WIDTH, HEIGHT);
     capture.hide();
 
     cocoSsd
@@ -67,7 +70,7 @@ export default function sketch(p) {
 
     cocoDrawings.map(drawing => {
       if (drawing) {
-        p.textSize(20);
+        p.textSize(TEXT_SIZE);
         p.strokeWeight(1);
         const textX = drawing.bbox[0] + drawing.bbox[2];
         const textY = drawing.bbox[1] + drawing.bbox[3];
@@ -92,7 +95,7 @@ export default function sketch(p) {
 
     faceDrawings.map(drawing => {
       if (drawing) {
-        p.textSize(15);
+        p.textSize(TEXT_SIZE);
         p.strokeWeight(1);
 
         const textX = drawing.detection.box._x + drawing.detection.box._width;

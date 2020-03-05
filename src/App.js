@@ -2,24 +2,27 @@ import React from "react";
 import "./App.css";
 import Weather from "./components/weather";
 import ClockComp from "./components/clock";
+import FaceRec from "./components/faceRecognition/faceRec";
 
 function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        <div className="one">
+        <div>
           <ClockComp />
         </div>
-        <div className="two">
+        <div>
           <Weather />
         </div>
-        <div className="three">Three</div>
-        <div className="four">Four</div>
-        <div className="five">Five</div>
-        <div className="six">Six</div>
-        <div className="seven">Seven</div>
-        <div className="eight">Eight</div>
-        <div className="nine">Nine</div>
+        <div>Three</div>
+        <div>Four</div>
+        <div>Five</div>
+        <div>Six</div>
+        <div>
+          <FaceRec />
+        </div>
+        <div>Eight</div>
+        <div>Nine</div>
       </div>
     </div>
   );
