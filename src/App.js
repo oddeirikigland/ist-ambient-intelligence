@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Weather from "./components/weather";
+import WeatherHook from "./components/weatherhook";
 import ClockComp from "./components/clock";
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
         <div className="two">
           <Weather />
         </div>
-        <div className="three">Three</div>
+        <div className="three">
+          <WeatherHook />
+        </div>
         <div className="four">Four</div>
         <div className="five">Five</div>
         <div className="six">Six</div>
