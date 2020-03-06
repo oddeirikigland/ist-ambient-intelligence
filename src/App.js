@@ -11,11 +11,9 @@ function App() {
         <div className="one">
           <ClockComp />
         </div>
-        <div className="two">
-          <Weather />
-        </div>
+        <div className="two">TWo</div>
         <div className="three">
-          <WeatherHook />
+          <WeatherHook />{" "}
         </div>
         <div className="four">Four</div>
         <div className="five">Five</div>

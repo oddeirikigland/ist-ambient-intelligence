@@ -5,19 +5,14 @@ function WeatherHook() {
   const [weather, setWeather] = useState(0);
 
   useEffect(() => {
-    setWeather(
-      axios
-        .get(
-          `http://api.openweathermap.org/data/2.5/weather?q=Lisbon&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}&units=metric`
-        )
-        .then(response => {
-          setWeather(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    );
-  });
+    const fetchData = async () => {
+      const result = await axios(
+        `http://api.openweathermap.org/data/2.5/weather?q=Lisbon&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}&units=metric`
+      );
+      setWeather(result.data);
+    };
+    fetchData();
+  }, []);
 
   return weather ? (
     <div className="weather">
