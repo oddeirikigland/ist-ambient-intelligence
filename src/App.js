@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Weather from "./components/weather";
 import ClockComp from "./components/clock";
+import Map from "./components/mapboxAndReact/map";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <div className="two">
           <Weather />
         </div>
-        <div className="three">Three</div>
+        <div className="three">
+          <Map />
+        </div>
         <div className="four">Four</div>
         <div className="five">Five</div>
         <div className="six">Six</div>
