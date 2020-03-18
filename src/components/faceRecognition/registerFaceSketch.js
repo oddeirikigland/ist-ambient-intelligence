@@ -1,29 +1,23 @@
 import * as faceapi from "face-api.js";
 
-import oddi from "./faces/oddi";
-import ingeboss from "./faces/ingeboss";
-import lysbrytern from "./faces/lysbrytern";
-const persons = [oddi, ingeboss, lysbrytern];
-
 const MODEL_URL = "/models";
 const HEIGHT = 200;
 const WIDTH = HEIGHT * 1.7778;
+let registeredPictures = 0;
+let personDescriptors = [];
 
-const loadFaceDescriptors = () => {
-  const faceDescriptor = name => faceapi.LabeledFaceDescriptors.fromJSON(name);
-  return persons.map(person => faceDescriptor(person));
-};
+// Options for program
+const PICTURES_TO_TAKE = 10;
+let nameToRegister = "new_name";
 
-const get_expression_value = raw_expressions => {
-  const copiedExpression = raw_expressions;
-  const expressions = Object.keys(copiedExpression).map(key => {
-    const value = copiedExpression[key];
-    return value;
-  });
-  const max = Math.max(...expressions);
-  return Object.keys(copiedExpression).filter(key => {
-    return copiedExpression[key] === max;
-  })[0];
+const handleSaveToPC = (jsonData, filename) => {
+  const fileData = JSON.stringify(jsonData);
+  const blob = new Blob([fileData], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = `${filename}.json`;
+  link.href = url;
+  link.click();
 };
 
 export default function sketch(p) {
@@ -73,13 +67,19 @@ export default function sketch(p) {
         console.log(data.length);
         if (data.length) {
           const person = data[0];
-          const faceMatcher = new faceapi.FaceMatcher(loadFaceDescriptors());
-          const bestMatch = faceMatcher.findBestMatch(person.descriptor);
-          console.log(
-            `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
-              0
-            )}, ${get_expression_value(person.expressions)}`
-          );
+          if (registeredPictures < PICTURES_TO_TAKE) {
+            registeredPictures++;
+            personDescriptors.push(person.descriptor);
+          } else if (registeredPictures === PICTURES_TO_TAKE) {
+            registeredPictures++;
+            const labelDescriptor = new faceapi.LabeledFaceDescriptors(
+              nameToRegister,
+              personDescriptors
+            );
+            const labelJson = labelDescriptor.toJSON();
+            handleSaveToPC(labelJson, nameToRegister);
+            console.log(`${nameToRegister} saved to store`);
+          }
         }
       });
   };
