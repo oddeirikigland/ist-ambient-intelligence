@@ -1,4 +1,5 @@
 import * as faceapi from "face-api.js";
+import axios from "axios";
 
 const MODEL_URL = "/models";
 const HEIGHT = 200;
@@ -8,16 +9,29 @@ let personDescriptors = [];
 
 // Options for program
 const PICTURES_TO_TAKE = 10;
-let nameToRegister = "new_name";
+let nameToRegister = "name";
 
-const handleSaveToPC = (jsonData, filename) => {
-  const fileData = JSON.stringify(jsonData);
-  const blob = new Blob([fileData], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.download = `${filename}.json`;
-  link.href = url;
-  link.click();
+const save_face_to_db = labelJson => {
+  console.log(labelJson);
+  const URL = process.env.REACT_APP_FACE_URL;
+  const AUTH_STR = process.env.REACT_APP_API_AUTH;
+  axios
+    .post(
+      URL,
+      { description: JSON.stringify(labelJson) },
+      {
+        headers: {
+          Authorization: AUTH_STR
+        }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      window.location.href = "/";
+    })
+    .catch(error => {
+      console.log("error " + error);
+    });
 };
 
 export default function sketch(p) {
@@ -77,7 +91,7 @@ export default function sketch(p) {
               personDescriptors
             );
             const labelJson = labelDescriptor.toJSON();
-            handleSaveToPC(labelJson, nameToRegister);
+            save_face_to_db(labelJson);
             console.log(`${nameToRegister} saved to store`);
           }
         }

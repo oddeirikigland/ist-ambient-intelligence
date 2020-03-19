@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import Monitor from "./components/monitor";
+import FaceRegister from "./components/faceRecognition/faceRegister";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
           <Route exact path="/">
             <Monitor />
           </Route>
-          <Route path="/register">asd</Route>
+          <Route path="/register">
+            <FaceRegister />
+          </Route>
         </Switch>
       </Router>
     </div>

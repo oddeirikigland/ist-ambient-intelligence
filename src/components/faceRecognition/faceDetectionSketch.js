@@ -1,17 +1,28 @@
 import * as faceapi from "face-api.js";
-
-import oddi from "./faces/oddi";
-import ingeboss from "./faces/ingeboss";
-import lysbrytern from "./faces/lysbrytern";
-const persons = [oddi, ingeboss, lysbrytern];
+import axios from "axios";
 
 const MODEL_URL = "/models";
 const HEIGHT = 200;
 const WIDTH = HEIGHT * 1.7778;
 
-const loadFaceDescriptors = () => {
+const get_faces = () => {
   const faceDescriptor = name => faceapi.LabeledFaceDescriptors.fromJSON(name);
-  return persons.map(person => faceDescriptor(person));
+  const URL = process.env.REACT_APP_FACE_URL;
+  const AUTH_STR = process.env.REACT_APP_API_AUTH;
+  return axios
+    .get(URL, {
+      headers: {
+        Authorization: AUTH_STR
+      }
+    })
+    .then(response => {
+      return response.data.results.map(face =>
+        faceDescriptor(JSON.parse(face.description))
+      );
+    })
+    .catch(error => {
+      console.log("error " + error);
+    });
 };
 
 const get_expression_value = raw_expressions => {
@@ -28,6 +39,7 @@ const get_expression_value = raw_expressions => {
 
 export default function sketch(p) {
   let capture = null;
+  const faces = get_faces();
 
   p.setup = async function() {
     await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
@@ -73,13 +85,15 @@ export default function sketch(p) {
         console.log(data.length);
         if (data.length) {
           const person = data[0];
-          const faceMatcher = new faceapi.FaceMatcher(loadFaceDescriptors());
-          const bestMatch = faceMatcher.findBestMatch(person.descriptor);
-          console.log(
-            `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
-              0
-            )}, ${get_expression_value(person.expressions)}`
-          );
+          faces.then(descriptions => {
+            const faceMatcher = new faceapi.FaceMatcher(descriptions);
+            const bestMatch = faceMatcher.findBestMatch(person.descriptor);
+            console.log(
+              `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
+                0
+              )}, ${get_expression_value(person.expressions)}`
+            );
+          });
         }
       });
   };
