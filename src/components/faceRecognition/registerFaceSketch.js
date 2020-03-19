@@ -1,6 +1,9 @@
 import * as faceapi from "face-api.js";
 import axios from "axios";
 
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+
 const MODEL_URL = "/models";
 const HEIGHT = 200;
 const WIDTH = HEIGHT * 1.7778;
@@ -13,7 +16,7 @@ let nameToRegister = "name";
 
 const save_face_to_db = labelJson => {
   console.log(labelJson);
-  const URL = process.env.REACT_APP_FACE_URL;
+  const URL = process.env.REACT_APP_API_URL + "faces/?";
   const AUTH_STR = process.env.REACT_APP_API_AUTH;
   axios
     .post(
