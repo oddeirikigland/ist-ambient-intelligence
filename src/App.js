@@ -1,26 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Weather from "./components/weather";
-import ClockComp from "./components/clock";
+
+import Monitor from "./components/monitor";
+import FaceRegister from "./components/faceRecognition/faceRegister";
 
 function App() {
   return (
     <div className="App">
-      <div className="wrapper">
-        <div className="one">
-          <ClockComp />
-        </div>
-        <div className="two">TWo</div>
-        <div className="three">
-          <Weather />
-        </div>
-        <div className="four">Four</div>
-        <div className="five">Five</div>
-        <div className="six">Six</div>
-        <div className="seven">Seven</div>
-        <div className="eight">Eight</div>
-        <div className="nine">Nine</div>
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Monitor />
+          </Route>
+          <Route path="/register">
+            <FaceRegister />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

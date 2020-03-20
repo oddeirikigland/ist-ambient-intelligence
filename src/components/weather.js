@@ -7,7 +7,7 @@ function Weather() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        `http://api.openweathermap.org/data/2.5/weather?q=Lisbon&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=Lisbon&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}&units=metric`
       );
       setWeather(result.data);
     };
