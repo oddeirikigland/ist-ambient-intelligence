@@ -10,10 +10,10 @@ function App() {
         <div className="one">
           <ClockComp />
         </div>
-        <div className="two">
+        <div className="two">TWo</div>
+        <div className="three">
           <Weather />
         </div>
-        <div className="three">Three</div>
         <div className="four">Four</div>
         <div className="five">Five</div>
         <div className="six">Six</div>
