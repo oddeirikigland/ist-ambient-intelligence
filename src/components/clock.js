@@ -1,21 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Clock from "react-clock";
 
-class ClockComp extends React.Component {
-  state = {
-    date: new Date()
-  };
+function ClockComp() {
+  const [state, setState] = useState(0);
+  useEffect(() => {
+    setInterval(() => setState({ date: new Date() }), 1000);
+  }, []);
 
-  componentDidMount() {
-    setInterval(() => this.setState({ date: new Date() }), 1000);
-  }
-
-  render() {
-    return (
-      <div className="ClockComp">
-        <Clock value={this.state.date} />
-      </div>
-    );
-  }
+  return (
+    <div className="ClockComp">
+      <Clock value={state.date} />
+    </div>
+  );
 }
+
 export default ClockComp;
