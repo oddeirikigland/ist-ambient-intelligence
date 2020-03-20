@@ -3,6 +3,7 @@ import "./monitor.css";
 import Weather from "./weather";
 import ClockComp from "./clock";
 import FaceRec from "./faceRecognition/faceRec";
+import Welcome from "./welcome";
 
 function Monitor() {
   return (
@@ -15,7 +16,9 @@ function Monitor() {
           <Weather />
         </div>
         <div>Three</div>
-        <div>Four</div>
+        <div>
+          <Welcome />
+        </div>
         <div>Five</div>
         <div>Six</div>
         <div>

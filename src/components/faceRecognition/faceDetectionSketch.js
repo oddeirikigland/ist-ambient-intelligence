@@ -1,5 +1,8 @@
+import React, { useContext } from "react";
 import * as faceapi from "face-api.js";
 import axios from "axios";
+
+import { PersonContext } from "../../PersonContextProvider";
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -40,7 +43,7 @@ const get_expression_value = raw_expressions => {
   })[0];
 };
 
-export default function sketch(p) {
+function sketch(p) {
   let capture = null;
   const faces = get_faces();
 
@@ -91,6 +94,7 @@ export default function sketch(p) {
           faces.then(descriptions => {
             const faceMatcher = new faceapi.FaceMatcher(descriptions);
             const bestMatch = faceMatcher.findBestMatch(person.descriptor);
+
             console.log(
               `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
                 0
@@ -100,4 +104,7 @@ export default function sketch(p) {
         }
       });
   };
+  return null;
 }
+
+export default sketch;
