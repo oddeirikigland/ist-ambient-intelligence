@@ -1,15 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
 import { PersonContext } from "../PersonContextProvider";
 
 function Welcome() {
   const { person, setPerson } = useContext(PersonContext);
-  useEffect(() => {}, []);
 
   return (
     <div className="WelcomeComp">
-      <p>Age: {person.age}</p>
-      <p>Mood: {person.mood}</p>
+      <p>Welcome {person.name != "default" && person.name}</p>
     </div>
   );
 }

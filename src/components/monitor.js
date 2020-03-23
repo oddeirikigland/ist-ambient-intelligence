@@ -5,7 +5,7 @@ import ClockComp from "./clock";
 import FaceRec from "./faceRecognition/faceRec";
 import Welcome from "./welcome";
 
-function Monitor() {
+const Monitor = () => {
   return (
     <div className="Monitor">
       <div className="wrapper">
@@ -29,6 +29,6 @@ function Monitor() {
       </div>
     </div>
   );
-}
+};
 
 export default Monitor;

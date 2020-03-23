@@ -1,16 +1,18 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-export const PersonContext = createContext();
+const store = { name: "default", gender: "unisex" };
 
-export const PersonContextProvider = props => {
-  const [person, setPerson] = useState({ age: "default", mood: "default" });
-  const value = { person, setPerson };
+export const PersonContext = createContext({
+  person: store,
+  setPerson: void {}
+});
+
+export const PersonContextProvider = ({ children }) => {
+  const [person, setPerson] = useState(store);
 
   return (
-    <PersonContext.Provider value={value}>
-      {props.children}
+    <PersonContext.Provider value={{ person, setPerson }}>
+      {children}
     </PersonContext.Provider>
   );
 };
-
-export default PersonContextProvider;
