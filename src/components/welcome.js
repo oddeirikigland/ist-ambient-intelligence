@@ -7,7 +7,7 @@ function Welcome() {
 
   return (
     <div className="WelcomeComp">
-      <p>Welcome {person.name != "default" && person.name}</p>
+      <p>Welcome {person.name !== "default" && person.name + "!"}</p>
     </div>
   );
 }

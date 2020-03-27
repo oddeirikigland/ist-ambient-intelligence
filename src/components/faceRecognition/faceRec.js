@@ -6,10 +6,10 @@ import faceDetectionSketch from "./faceDetectionSketch";
 import { PersonContext } from "../../PersonContextProvider";
 
 function FaceRec() {
-  const { person, setPerson } = useContext(PersonContext);
+  const context = useContext(PersonContext);
   return (
     <div>
-      <P5Wrapper sketch={faceDetectionSketch} setPerson={setPerson} />
+      <P5Wrapper sketch={faceDetectionSketch} setPerson={context.setPerson} />
       <Link to="/register">Register your face</Link>
     </div>
   );
