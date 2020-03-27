@@ -3,8 +3,9 @@ import "./monitor.css";
 import Weather from "./weather";
 import ClockComp from "./clock";
 import FaceRec from "./faceRecognition/faceRec";
+import Welcome from "./welcome";
 
-function Monitor() {
+const Monitor = () => {
   return (
     <div className="Monitor">
       <div className="wrapper">
@@ -15,7 +16,9 @@ function Monitor() {
           <Weather />
         </div>
         <div>Three</div>
-        <div>Four</div>
+        <div>
+          <Welcome />
+        </div>
         <div>Five</div>
         <div>Six</div>
         <div>
@@ -26,6 +29,6 @@ function Monitor() {
       </div>
     </div>
   );
-}
+};
 
 export default Monitor;
