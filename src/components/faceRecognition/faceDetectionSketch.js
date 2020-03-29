@@ -43,6 +43,13 @@ const get_expression_value = raw_expressions => {
 export default function sketch(p) {
   let capture = null;
   const faces = get_faces();
+  let setPerson = null;
+
+  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
+    if (props.setPerson) {
+      setPerson = props.setPerson;
+    }
+  };
 
   p.setup = async function() {
     await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
@@ -91,6 +98,11 @@ export default function sketch(p) {
           faces.then(descriptions => {
             const faceMatcher = new faceapi.FaceMatcher(descriptions);
             const bestMatch = faceMatcher.findBestMatch(person.descriptor);
+            setPerson({
+              distance: bestMatch.distance,
+              name: bestMatch.label.toString(),
+              gender: person.gender
+            });
             console.log(
               `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
                 0

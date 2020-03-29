@@ -4,20 +4,23 @@ import "./App.css";
 
 import Monitor from "./components/monitor";
 import FaceRegister from "./components/faceRecognition/faceRegister";
+import { PersonContextProvider } from "./PersonContextProvider";
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Monitor />
-          </Route>
-          <Route path="/register">
-            <FaceRegister />
-          </Route>
-        </Switch>
-      </Router>
+      <PersonContextProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Monitor />
+            </Route>
+            <Route path="/register">
+              <FaceRegister />
+            </Route>
+          </Switch>
+        </Router>
+      </PersonContextProvider>
     </div>
   );
 }
