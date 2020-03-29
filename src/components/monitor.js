@@ -3,11 +3,13 @@ import "./monitor.css";
 import Weather from "./weather";
 import ClockComp from "./clock";
 import FaceRec from "./faceRecognition/faceRec";
+import Header from "./heading";
 import Welcome from "./welcome";
 
 const Monitor = () => {
   return (
     <div className="Monitor">
+      <Header />
       <div className="wrapper">
         <div>
           <ClockComp />

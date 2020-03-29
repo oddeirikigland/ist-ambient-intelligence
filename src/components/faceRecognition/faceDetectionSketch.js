@@ -5,7 +5,7 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
 const MODEL_URL = "/models";
-const HEIGHT = 200;
+const HEIGHT = 180;
 const WIDTH = HEIGHT * 1.7778;
 
 const get_faces = () => {
