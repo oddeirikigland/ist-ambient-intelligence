@@ -7,12 +7,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 const MODEL_URL = "/models";
 const HEIGHT = 200;
 const WIDTH = HEIGHT * 1.7778;
-let registeredPictures = 0;
 let personDescriptors = [];
-
-// Options for program
-const PICTURES_TO_TAKE = 10;
-let nameToRegister = "name";
 
 const save_face_to_db = labelJson => {
   console.log(labelJson);
@@ -39,6 +34,25 @@ const save_face_to_db = labelJson => {
 
 export default function sketch(p) {
   let capture = null;
+  let nameToRegister = "name";
+  let picturesToTake = 10;
+  let handlePictureTaken;
+  let picturesTaken = 0;
+
+  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
+    if (props.nameToRegister) {
+      nameToRegister = props.nameToRegister
+    }
+    if (props.picturesToTake) {
+      picturesToTake = props.picturesToTake
+    }
+    if (props.handlePictureTaken) {
+      handlePictureTaken = props.handlePictureTaken
+    }
+    if (props.picturesTaken) {
+      picturesTaken = props.picturesTaken
+    }
+  }
 
   p.setup = async function() {
     await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
@@ -84,20 +98,20 @@ export default function sketch(p) {
         console.log(data.length);
         if (data.length) {
           const person = data[0];
-          if (registeredPictures < PICTURES_TO_TAKE) {
-            registeredPictures++;
+          if (picturesTaken < picturesToTake) {
+            handlePictureTaken()
             personDescriptors.push(person.descriptor);
-          } else if (registeredPictures === PICTURES_TO_TAKE) {
-            registeredPictures++;
+          } else if (picturesTaken === picturesToTake) {
+            handlePictureTaken()
             const labelDescriptor = new faceapi.LabeledFaceDescriptors(
               nameToRegister,
               personDescriptors
-            );
-            const labelJson = labelDescriptor.toJSON();
-            save_face_to_db(labelJson);
-            console.log(`${nameToRegister} saved to store`);
+              );
+              const labelJson = labelDescriptor.toJSON();
+              save_face_to_db(labelJson);
+              console.log(`${nameToRegister} saved to store`);
+            }
           }
-        }
-      });
+        });
   };
 }
