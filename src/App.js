@@ -5,10 +5,14 @@ import "./App.css";
 import Monitor from "./components/monitor";
 import FaceRegister from "./components/faceRecognition/faceRegister";
 import { PersonContextProvider } from "./PersonContextProvider";
+import RandomBackground from "./components/randomBackground";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{ backgroundImage: `url(${RandomBackground()})` }}
+    >
       <PersonContextProvider>
         <Router>
           <Switch>
