@@ -10,7 +10,7 @@ const getHourFromUnixTimestamp = unix_timestamp => {
 const getWeatherAtMidday = weather => {
   return weather.list.filter(forecast => {
     const hour = getHourFromUnixTimestamp(forecast.dt);
-    return 10 < hour && hour < 12;
+    return 10 <= hour && hour <= 12;
   });
 };
 
