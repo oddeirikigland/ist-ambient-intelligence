@@ -5,6 +5,7 @@ import ClockComp from "./clock";
 import FaceRec from "./faceRecognition/faceRec";
 import Header from "./heading";
 import Welcome from "./welcome";
+import Message from "./message";
 
 const Monitor = () => {
   return (
@@ -22,7 +23,9 @@ const Monitor = () => {
           <Welcome />
         </div>
         <div>Five</div>
-        <div>Six</div>
+        <div>
+          <Message />
+        </div>
         <div>
           <FaceRec />
         </div>
