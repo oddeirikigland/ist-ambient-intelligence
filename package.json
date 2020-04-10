@@ -16,11 +16,12 @@
     "react-awesome-modal": "^2.0.5",
     "react-clock": "^2.4.0",
     "react-dom": "^16.13.0",
-    "react-hooks-use-modal": "^1.0.9",
     "react-geolocated": "^3.0.1",
+    "react-hooks-use-modal": "^1.0.9",
     "react-p5-wrapper": "^2.0.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "react-stickies": "0.0.16"
   },
   "scripts": {
     "start": "react-scripts start",
