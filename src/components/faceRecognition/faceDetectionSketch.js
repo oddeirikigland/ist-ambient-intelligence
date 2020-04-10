@@ -8,34 +8,47 @@ const MODEL_URL = "/models";
 const HEIGHT = 180;
 const WIDTH = HEIGHT * 1.7778;
 
+const distanceList = [];
+const nameList = [];
+const genderList = [];
+let updateCount = 0;
+
+const mode = (arr) => {
+  return arr.sort(
+    (a, b) =>
+      arr.filter((v) => v === a).length - arr.filter((v) => v === b).length
+  )[arr.length - 1];
+};
+
 const get_faces = () => {
-  const faceDescriptor = name => faceapi.LabeledFaceDescriptors.fromJSON(name);
+  const faceDescriptor = (name) =>
+    faceapi.LabeledFaceDescriptors.fromJSON(name);
   const URL = process.env.REACT_APP_API_URL + "faces/?";
   const AUTH_STR = process.env.REACT_APP_API_AUTH;
   return axios
     .get(URL, {
       headers: {
-        Authorization: AUTH_STR
-      }
+        Authorization: AUTH_STR,
+      },
     })
-    .then(response => {
-      return response.data.results.map(face =>
+    .then((response) => {
+      return response.data.results.map((face) =>
         faceDescriptor(JSON.parse(face.description))
       );
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("error " + error);
     });
 };
 
-const get_expression_value = raw_expressions => {
+const get_expression_value = (raw_expressions) => {
   const copiedExpression = raw_expressions;
-  const expressions = Object.keys(copiedExpression).map(key => {
+  const expressions = Object.keys(copiedExpression).map((key) => {
     const value = copiedExpression[key];
     return value;
   });
   const max = Math.max(...expressions);
-  return Object.keys(copiedExpression).filter(key => {
+  return Object.keys(copiedExpression).filter((key) => {
     return copiedExpression[key] === max;
   })[0];
 };
@@ -45,13 +58,35 @@ export default function sketch(p) {
   const faces = get_faces();
   let setPerson = null;
 
-  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
+  p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
     if (props.setPerson) {
       setPerson = props.setPerson;
     }
   };
 
-  p.setup = async function() {
+  const update_person = (bestMatch, person) => {
+    if (distanceList.length > 20) {
+      distanceList.pop();
+      nameList.pop();
+      genderList.pop();
+    }
+    distanceList.push(bestMatch.distance);
+    nameList.push(bestMatch.label.toString());
+    genderList.push(person.gender);
+    updateCount++;
+
+    if (distanceList.length > 10 && updateCount > 10) {
+      console.log("SET PERSON IS CALLED");
+      setPerson({
+        distance: mode(distanceList),
+        name: mode(nameList),
+        gender: mode(genderList),
+      });
+      updateCount = 0;
+    }
+  };
+
+  p.setup = async function () {
     await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
     await faceapi.loadAgeGenderModel(MODEL_URL);
     await faceapi.loadFaceExpressionModel(MODEL_URL);
@@ -63,11 +98,11 @@ export default function sketch(p) {
       video: {
         mandatory: {
           minWidth: WIDTH,
-          minHeight: HEIGHT
+          minHeight: HEIGHT,
         },
-        optional: [{ maxFrameRate: 40 }]
+        optional: [{ maxFrameRate: 40 }],
       },
-      audio: false
+      audio: false,
     };
 
     capture = p.createCapture(constraints, () => {});
@@ -91,18 +126,14 @@ export default function sketch(p) {
       .withFaceExpressions()
       .withAgeAndGender()
       .withFaceDescriptors()
-      .then(data => {
+      .then((data) => {
         console.log(data.length);
         if (data.length) {
           const person = data[0];
-          faces.then(descriptions => {
+          faces.then((descriptions) => {
             const faceMatcher = new faceapi.FaceMatcher(descriptions);
             const bestMatch = faceMatcher.findBestMatch(person.descriptor);
-            setPerson({
-              distance: bestMatch.distance,
-              name: bestMatch.label.toString(),
-              gender: person.gender
-            });
+            update_person(bestMatch, person);
             console.log(
               `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
                 0
