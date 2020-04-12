@@ -96,6 +96,7 @@ class Postit extends React.Component {
     const notes = this.state.notes;
     notes.map((note) => {
       delete note.editorState;
+      return note
     });
     // Make service call to save notes
     postNotes(notes, this.state.person);
