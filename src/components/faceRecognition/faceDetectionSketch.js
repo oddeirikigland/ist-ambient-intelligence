@@ -41,17 +41,17 @@ const get_faces = () => {
     });
 };
 
-const get_expression_value = (raw_expressions) => {
-  const copiedExpression = raw_expressions;
-  const expressions = Object.keys(copiedExpression).map((key) => {
-    const value = copiedExpression[key];
-    return value;
-  });
-  const max = Math.max(...expressions);
-  return Object.keys(copiedExpression).filter((key) => {
-    return copiedExpression[key] === max;
-  })[0];
-};
+// const get_expression_value = (raw_expressions) => {
+//   const copiedExpression = raw_expressions;
+//   const expressions = Object.keys(copiedExpression).map((key) => {
+//     const value = copiedExpression[key];
+//     return value;
+//   });
+//   const max = Math.max(...expressions);
+//   return Object.keys(copiedExpression).filter((key) => {
+//     return copiedExpression[key] === max;
+//   })[0];
+// };
 
 export default function sketch(p) {
   let capture = null;
@@ -76,7 +76,6 @@ export default function sketch(p) {
     updateCount++;
 
     if (distanceList.length > 10 && updateCount > 10) {
-      console.log("SET PERSON IS CALLED");
       setPerson({
         distance: mode(distanceList),
         name: mode(nameList),
@@ -134,11 +133,6 @@ export default function sketch(p) {
             const faceMatcher = new faceapi.FaceMatcher(descriptions);
             const bestMatch = faceMatcher.findBestMatch(person.descriptor);
             update_person(bestMatch, person);
-            console.log(
-              `${bestMatch.toString()}, ${person.gender}, ${person.age.toFixed(
-                0
-              )}, ${get_expression_value(person.expressions)}`
-            );
           });
         }
       });
