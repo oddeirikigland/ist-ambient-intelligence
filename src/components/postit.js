@@ -3,11 +3,13 @@ import ReactStickies from "react-stickies";
 import axios from "axios";
 
 import { PersonContext } from "../PersonContextProvider";
+import AwesomeSpinner from "./awesomeSpinner";
+
+const URL = process.env.REACT_APP_API_URL + `notes/`;
+const AUTH_STR = process.env.REACT_APP_API_AUTH;
 
 const postNotes = (notes, person) => {
-  const URL = process.env.REACT_APP_API_URL + `notes/`;
-  const AUTH_STR = process.env.REACT_APP_API_AUTH;
-  axios
+  return axios
     .post(
       URL,
       {
@@ -41,9 +43,11 @@ class Postit extends React.Component {
         isDragable: false,
       },
       person: "nothing",
+      loading: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.getNotes = this.getNotes.bind(this);
   }
 
   componentDidMount() {
@@ -64,42 +68,49 @@ class Postit extends React.Component {
     }
   }
   getNotes(person) {
-    const URL = process.env.REACT_APP_API_URL + `notes/`;
-    const AUTH_STR = process.env.REACT_APP_API_AUTH;
-    axios
-      .get(URL, {
-        headers: {
-          Authorization: AUTH_STR,
-        },
-      })
-      .then((response) => {
-        const result = response.data.results.find(
-          (element) => element.person === person
-        );
-        if (result) {
-          this.onChange(JSON.parse(result.notes));
-        } else {
-          this.onChange(
-            JSON.parse(
-              '[{"grid":{"w":2,"h":2,"x":0,"y":null,"i":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","moved":false,"static":false},"id":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","title":"Title","color":"#FBE4BE","degree":"-1deg","timeStamp":"Apr 10, 2020 8:49 PM","contentEditable":true,"text":""}]'
-            )
+    this.setState({ loading: true }, () => {
+      axios
+        .get(URL, {
+          headers: {
+            Authorization: AUTH_STR,
+          },
+        })
+        .then((response) => {
+          const result = response.data.results.find(
+            (element) => element.person === person
           );
-        }
-      })
-      .catch((error) => {
-        console.log("Error: " + error);
-      });
+          if (result) {
+            this.onChange(JSON.parse(result.notes));
+          } else {
+            this.onChange(
+              JSON.parse(
+                '[{"grid":{"w":2,"h":2,"x":0,"y":null,"i":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","moved":false,"static":false},"id":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","title":"Title","color":"#FBE4BE","degree":"-1deg","timeStamp":"Apr 10, 2020 8:49 PM","contentEditable":true,"text":""}]'
+              )
+            );
+          }
+          this.setState({
+            loading: false,
+          });
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+        });
+    });
   }
 
   onSave() {
-    // Make sure to delete the editorState before saving to backend
-    const notes = this.state.notes;
-    notes.map((note) => {
-      delete note.editorState;
-      return note
+    this.setState({ loading: true }, () => {
+      const notes = this.state.notes;
+      notes.map((note) => {
+        delete note.editorState;
+        return note;
+      });
+      postNotes(notes, this.state.person).then(() =>
+        this.setState({
+          loading: false,
+        })
+      );
     });
-    // Make service call to save notes
-    postNotes(notes, this.state.person);
   }
   onChange(notes) {
     this.setState({
@@ -117,12 +128,16 @@ class Postit extends React.Component {
           title={false}
           grid={this.state.grid}
         />
-        <button
-          onClick={this.onSave}
-          style={{ display: "block", margin: "6px auto" }}
-        >
-          Save note
-        </button>
+        {this.state.loading ? (
+          <AwesomeSpinner />
+        ) : (
+          <button
+            onClick={this.onSave}
+            style={{ display: "block", margin: "6px auto" }}
+          >
+            Save note
+          </button>
+        )}
       </div>
     );
   }
