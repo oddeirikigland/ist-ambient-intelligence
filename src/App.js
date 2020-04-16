@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-
 import Monitor from "./components/monitor";
 import FaceRegister from "./components/faceRecognition/faceRegister";
 import { PersonContextProvider } from "./PersonContextProvider";
