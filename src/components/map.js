@@ -2,11 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { nullableTypeAnnotation } from "@babel/types";
-import "./map.css";
 
 const styles = {
-  height: "216px",
-  width: "300px",
+  height: "220px",
+  width: "280px",
   position: "absolute",
   display: "block"
 };

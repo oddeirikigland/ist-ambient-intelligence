@@ -6,6 +6,7 @@ import FaceRec from "./faceRecognition/faceRec";
 import Header from "./heading";
 import Welcome from "./welcome";
 import Message from "./message";
+import Map from "./map";
 import WeatherForecast from "./weatherForecast";
 import Postit from "./postit";
 
@@ -15,26 +16,30 @@ const Monitor = () => {
       <Header />
       <div className="wrapper">
         <div>
-          <ClockComp />
+          <WeatherForecast />
         </div>
         <div>
           <Weather />
         </div>
-        <div>
-          <WeatherForecast />
-        </div>
+        <div></div>
         <div>
           <Welcome />
         </div>
-        <div>Five</div>
+        <div>
+          <ClockComp />
+        </div>
         <div>
           <Message />
         </div>
         <div>
           <FaceRec />
         </div>
-        <div>Eight</div>
-        <div><Postit/></div>
+        <div>
+          <Map />
+        </div>
+        <div>
+          <Postit />
+        </div>
       </div>
     </div>
   );
