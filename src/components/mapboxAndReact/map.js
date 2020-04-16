@@ -20,7 +20,7 @@ function Map() {
     const initializeMap = ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
-        style: "mapbox://styles/isollid/ck7tegpyv1b8h1iob8z6ipnom",
+        style: "mapbox://styles/isollid/ck8zyxw490u6q1in1j1nktkyo",
         center: [-9.137, 38.724],
         zoom: 11.5
       });
