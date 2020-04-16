@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { nullableTypeAnnotation } from "@babel/types";
 
 const styles = {
   height: "220px",
