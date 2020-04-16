@@ -7,6 +7,7 @@ import Header from "./heading";
 import Welcome from "./welcome";
 import Message from "./message";
 import WeatherForecast from "./weatherForecast";
+import Postit from "./postit";
 
 const Monitor = () => {
   return (
@@ -33,7 +34,7 @@ const Monitor = () => {
           <FaceRec />
         </div>
         <div>Eight</div>
-        <div>Nine</div>
+        <div><Postit/></div>
       </div>
     </div>
   );
