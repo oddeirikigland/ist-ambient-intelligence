@@ -83,8 +83,8 @@ class WeatherForecast extends React.Component {
     const weather = this.state.weather;
     return weather ? (
       <div>
-        <h3>Weather forecast next 5 days</h3>
-        <table>
+        <h3 className="box-header">Weather forecast next 5 days</h3>
+        <table className="weatherforecast-table">
           <tbody>
             <tr>{this.renderDays()}</tr>
             <tr>{this.renderWeatherIcon()}</tr>

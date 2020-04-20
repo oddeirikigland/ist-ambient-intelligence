@@ -32,7 +32,7 @@ class Weather extends React.Component {
 
     return weather ? (
       <div className="weather">
-        <h3>Current weather</h3>
+        <h3 className="box-header">Current weather</h3>
         <p>Location: {weather.name}</p>
         <p>Weather: {weather.weather[0].description}</p>
         <p>Temperature: {weather.main.temp}</p>
