@@ -51,7 +51,10 @@ class Postit extends React.Component {
   }
 
   componentDidMount() {
-    const person = this.props.context.person.name;
+    let person = this.props.context.person.name;
+    if (this.props.type === "shared") {
+      person = "shared";
+    }
     this.getNotes(person);
     this.setState({
       person,
@@ -59,7 +62,10 @@ class Postit extends React.Component {
   }
 
   componentDidUpdate() {
-    const person = this.props.context.person.name;
+    let person = this.props.context.person.name;
+    if (this.props.type === "shared") {
+      person = "shared";
+    }
     if (person !== this.state.person) {
       this.getNotes(person);
       this.setState({
@@ -84,7 +90,7 @@ class Postit extends React.Component {
           } else {
             this.onChange(
               JSON.parse(
-                '[{"grid":{"w":2,"h":2,"x":0,"y":null,"i":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","moved":false,"static":false},"id":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","title":"Title","color":"#FBE4BE","degree":"-1deg","timeStamp":"Apr 10, 2020 8:49 PM","contentEditable":true,"text":""}]'
+                '[{"grid":{"w":2,"h":2,"x":0,"y":null,"i":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","moved":false,"static":false},"id":"0ccf3ebc-2bc1-ce9a-9f29-0cbff2a49cf8","title":"Title","color":"#E4FABC","degree":"-1deg","timeStamp":"Apr 10, 2020 8:49 PM","contentEditable":true,"text":""}]'
               )
             );
           }
@@ -120,7 +126,10 @@ class Postit extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div
+        style={{ width: "180px", display: "inline-block", textAlign: "center" }}
+      >
+        <h3>{this.props.title}</h3>
         <ReactStickies
           noteHeaderStyle={{ opacity: 0 }}
           notes={this.state.notes}
@@ -145,6 +154,8 @@ class Postit extends React.Component {
 
 export default (props) => (
   <PersonContext.Consumer>
-    {(state) => <Postit context={state} />}
+    {(state) => (
+      <Postit context={state} title={props.title} type={props.type} />
+    )}
   </PersonContext.Consumer>
 );
