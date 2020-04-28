@@ -9,6 +9,7 @@ import Message from "./message";
 import Map from "./map";
 import WeatherForecast from "./weatherForecast";
 import Postit from "./postit";
+import Calender from "./calender";
 
 const Monitor = () => {
   return (
@@ -21,7 +22,9 @@ const Monitor = () => {
         <div>
           <Weather />
         </div>
-        <div></div>
+        <div>
+          <Calender />
+        </div>
         <div>
           <Welcome />
         </div>

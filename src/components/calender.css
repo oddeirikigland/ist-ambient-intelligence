@@ -1,0 +1,19 @@
+.schedule-activity {
+  display: flex;
+  background-color: #9277bc;
+  border-radius: 3px;
+  margin: 4px 0 4px 0;
+}
+
+.schedule-activity-disable {
+  display: flex;
+  border-radius: 3px;
+  background-color: #9277bc;
+  opacity: 0.5;
+  margin: 4px 0 4px 0;
+}
+
+.schedule-activity-text {
+  font-size: 14px;
+  margin: 7px;
+}
