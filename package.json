@@ -19,6 +19,7 @@
     "react-dom": "^16.13.0",
     "react-geolocated": "^3.0.1",
     "react-hooks-use-modal": "^1.0.9",
+    "react-iframe": "^1.8.0",
     "react-p5-wrapper": "^2.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
