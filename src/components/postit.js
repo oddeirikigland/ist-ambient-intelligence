@@ -129,7 +129,7 @@ class Postit extends React.Component {
       <div
         style={{ width: "180px", display: "inline-block", textAlign: "center" }}
       >
-        <h3>{this.props.title}</h3>
+        <h3 className="comp-header">{this.props.title}</h3>
         <ReactStickies
           noteHeaderStyle={{ opacity: 0 }}
           notes={this.state.notes}

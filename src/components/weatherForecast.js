@@ -2,13 +2,13 @@ import React from "react";
 import axios from "axios";
 import { geolocated } from "react-geolocated";
 
-const getHourFromUnixTimestamp = unix_timestamp => {
+const getHourFromUnixTimestamp = (unix_timestamp) => {
   var date = new Date(unix_timestamp * 1000);
   return date.getHours();
 };
 
-const getWeatherAtMidday = weather => {
-  return weather.list.filter(forecast => {
+const getWeatherAtMidday = (weather) => {
+  return weather.list.filter((forecast) => {
     const hour = getHourFromUnixTimestamp(forecast.dt);
     return 10 <= hour && hour <= 12;
   });
@@ -22,7 +22,7 @@ const nextFiveDays = () => {
     "Wednesday",
     "Thursday",
     "Friday",
-    "Saturday"
+    "Saturday",
   ];
   const today = new Date().getDay();
   const nextDays = [];
@@ -37,7 +37,7 @@ class WeatherForecast extends React.Component {
     super(props);
     this.state = {
       weather: null,
-      locationFound: false
+      locationFound: false,
     };
   }
 
@@ -48,13 +48,13 @@ class WeatherForecast extends React.Component {
       );
     };
     fetchData()
-      .then(result => {
+      .then((result) => {
         this.setState({
           weather: getWeatherAtMidday(result.data),
-          locationFound: true
+          locationFound: true,
         });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }
 
   renderDays() {
@@ -83,7 +83,7 @@ class WeatherForecast extends React.Component {
     const weather = this.state.weather;
     return weather ? (
       <div>
-        <h3 className="box-header">Weather forecast next 5 days</h3>
+        <h3 className="comp-header">Weather forecast next 5 days</h3>
         <table className="weatherforecast-table">
           <tbody>
             <tr>{this.renderDays()}</tr>
@@ -99,7 +99,7 @@ class WeatherForecast extends React.Component {
 
 export default geolocated({
   positionOptions: {
-    enableHighAccuracy: false
+    enableHighAccuracy: false,
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
 })(WeatherForecast);
