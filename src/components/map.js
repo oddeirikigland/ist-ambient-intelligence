@@ -3,10 +3,10 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const styles = {
-  height: "220px",
-  width: "280px",
+  height: "300px",
+  width: "350px",
   position: "absolute",
-  display: "block"
+  display: "block",
 };
 
 function Map() {
@@ -20,7 +20,7 @@ function Map() {
         container: mapContainer.current,
         style: "mapbox://styles/isollid/ck8zyxw490u6q1in1j1nktkyo",
         center: [-9.137, 38.724],
-        zoom: 11.5
+        zoom: 11.5,
       });
       map.on("load", () => {
         setMap(map);
@@ -30,7 +30,7 @@ function Map() {
     if (!map) initializeMap({ setMap, mapContainer });
   }, [map]);
 
-  return <div ref={el => (mapContainer.current = el)} style={styles} />;
+  return <div ref={(el) => (mapContainer.current = el)} style={styles} />;
 }
 
 export default Map;

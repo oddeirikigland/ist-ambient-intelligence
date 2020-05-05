@@ -7,7 +7,7 @@ class Weather extends React.Component {
     super(props);
     this.state = {
       weather: null,
-      locationFound: false
+      locationFound: false,
     };
   }
 
@@ -18,10 +18,10 @@ class Weather extends React.Component {
       );
     };
     fetchData()
-      .then(result => {
+      .then((result) => {
         this.setState({ weather: result.data, locationFound: true });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }
 
   render() {
@@ -32,7 +32,7 @@ class Weather extends React.Component {
 
     return weather ? (
       <div className="weather">
-        <h3 className="box-header">Current weather</h3>
+        <h3 className="comp-header">Current weather</h3>
         <p>Location: {weather.name}</p>
         <p>Weather: {weather.weather[0].description}</p>
         <p>Temperature: {weather.main.temp}</p>
@@ -46,7 +46,7 @@ class Weather extends React.Component {
 
 export default geolocated({
   positionOptions: {
-    enableHighAccuracy: false
+    enableHighAccuracy: false,
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
 })(Weather);

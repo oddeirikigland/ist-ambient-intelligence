@@ -5,11 +5,11 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
 const MODEL_URL = "/models";
-const HEIGHT = 200;
+const HEIGHT = 220;
 const WIDTH = HEIGHT * 1.7778;
 let personDescriptors = [];
 
-const save_face_to_db = labelJson => {
+const save_face_to_db = (labelJson) => {
   console.log(labelJson);
   const URL = process.env.REACT_APP_API_URL + "faces/?";
   const AUTH_STR = process.env.REACT_APP_API_AUTH;
@@ -19,15 +19,15 @@ const save_face_to_db = labelJson => {
       { description: JSON.stringify(labelJson) },
       {
         headers: {
-          Authorization: AUTH_STR
-        }
+          Authorization: AUTH_STR,
+        },
       }
     )
-    .then(response => {
+    .then((response) => {
       console.log(response);
       window.location.href = "/";
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("error " + error);
     });
 };
@@ -39,22 +39,22 @@ export default function sketch(p) {
   let handlePictureTaken;
   let picturesTaken = 0;
 
-  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
+  p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
     if (props.nameToRegister) {
-      nameToRegister = props.nameToRegister
+      nameToRegister = props.nameToRegister;
     }
     if (props.picturesToTake) {
-      picturesToTake = props.picturesToTake
+      picturesToTake = props.picturesToTake;
     }
     if (props.handlePictureTaken) {
-      handlePictureTaken = props.handlePictureTaken
+      handlePictureTaken = props.handlePictureTaken;
     }
     if (props.picturesTaken) {
-      picturesTaken = props.picturesTaken
+      picturesTaken = props.picturesTaken;
     }
-  }
+  };
 
-  p.setup = async function() {
+  p.setup = async function () {
     await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
     await faceapi.loadAgeGenderModel(MODEL_URL);
     await faceapi.loadFaceExpressionModel(MODEL_URL);
@@ -66,11 +66,11 @@ export default function sketch(p) {
       video: {
         mandatory: {
           minWidth: WIDTH,
-          minHeight: HEIGHT
+          minHeight: HEIGHT,
         },
-        optional: [{ maxFrameRate: 40 }]
+        optional: [{ maxFrameRate: 40 }],
       },
-      audio: false
+      audio: false,
     };
 
     capture = p.createCapture(constraints, () => {});
@@ -94,24 +94,24 @@ export default function sketch(p) {
       .withFaceExpressions()
       .withAgeAndGender()
       .withFaceDescriptors()
-      .then(data => {
+      .then((data) => {
         console.log(data.length);
         if (data.length) {
           const person = data[0];
           if (picturesTaken < picturesToTake) {
-            handlePictureTaken()
+            handlePictureTaken();
             personDescriptors.push(person.descriptor);
           } else if (picturesTaken === picturesToTake) {
-            handlePictureTaken()
+            handlePictureTaken();
             const labelDescriptor = new faceapi.LabeledFaceDescriptors(
               nameToRegister,
               personDescriptors
-              );
-              const labelJson = labelDescriptor.toJSON();
-              save_face_to_db(labelJson);
-              console.log(`${nameToRegister} saved to store`);
-            }
+            );
+            const labelJson = labelDescriptor.toJSON();
+            save_face_to_db(labelJson);
+            console.log(`${nameToRegister} saved to store`);
           }
-        });
+        }
+      });
   };
 }
