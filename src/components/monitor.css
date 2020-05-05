@@ -44,3 +44,8 @@ button {
 button:hover {
   background-color: #7ad1ff;
 }
+
+.comp-container {
+  display: flex;
+  justify-content: center;
+}
