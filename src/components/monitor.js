@@ -8,6 +8,7 @@ import Welcome from "./welcome";
 import Message from "./message";
 import Map from "./map";
 import WeatherForecast from "./weatherForecast";
+import Calender from "./calender";
 import PostitParent from "./postitParent";
 
 const Monitor = () => {
@@ -21,7 +22,9 @@ const Monitor = () => {
         <div>
           <Weather />
         </div>
-        <div></div>
+        <div>
+          <Calender />
+        </div>
         <div>
           <Welcome />
         </div>
