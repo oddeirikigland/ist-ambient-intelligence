@@ -28,17 +28,18 @@ function Welcome() {
   };
 
   return (
-    <div className="WelcomeComp">
-      <h3 className="comp-header">
-        {personContext.person.name === "default"
-          ? "No face detected."
-          : "Hi " + personContext.person.name + "!"}
-      </h3>
-
-      <div className="mood-container">
-        <h3 className="comp-header">Current mood: {"  "}</h3>
-        <Emoji symbol={emojiMapping[personContext.person.expression]} />
-      </div>
+    <div>
+      {personContext.person.name === "default" ? (
+        <p className="no-face-text">No face detected</p>
+      ) : (
+        <div>
+          <h3 className="comp-header">Hi {personContext.person.name}!</h3>
+          <div className="mood-container">
+            <h3 className="comp-header">Current mood: {"  "}</h3>
+            <Emoji symbol={emojiMapping[personContext.person.expression]} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
