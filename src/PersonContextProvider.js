@@ -1,10 +1,14 @@
 import React, { createContext, useState } from "react";
 
-const store = { name: "default", gender: "unisex" };
+const store = {
+  name: "default",
+  gender: "unisex",
+  expression: "No mood dectected.",
+};
 
 export const PersonContext = createContext({
   person: store,
-  setPerson: void {}
+  setPerson: void {},
 });
 
 export const PersonContextProvider = ({ children }) => {

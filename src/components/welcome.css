@@ -1,0 +1,8 @@
+.emoji {
+  font-size: 4em;
+  margin: 0px 0px 0 10px;
+}
+.mood-container {
+  display: flex;
+  align-items: center;
+}
