@@ -23,21 +23,21 @@ const Monitor = () => {
           <Weather />
         </div>
         <div>
-          <Calender />
+          <FaceRec />
         </div>
         <div>
           <Welcome />
         </div>
-        <div>
+        <div className="comp-container">
           <ClockComp />
         </div>
         <div>
           <Message />
         </div>
-        <div>
-          <FaceRec />
+        <div className="comp-container">
+          <Calender />
         </div>
-        <div>
+        <div className="comp-container">
           <Map />
         </div>
         <div>
