@@ -16,8 +16,8 @@ const Monitor = () => {
     <div className="Monitor">
       <Header />
       <div className="wrapper">
-        <div>
-          <WeatherForecast />
+        <div className="comp-container">
+          <ClockComp />
         </div>
         <div>
           <Weather />
@@ -28,8 +28,8 @@ const Monitor = () => {
         <div>
           <Welcome />
         </div>
-        <div className="comp-container">
-          <ClockComp />
+        <div>
+          <WeatherForecast />
         </div>
         <div>
           <Message />
