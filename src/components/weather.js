@@ -25,7 +25,6 @@ class Weather extends React.Component {
   }
 
   renderWeatherIcon() {
-    console.log(this.state.weather.weather[0].icon);
     return this.state.weather && this.state.weather.weather[0] ? (
       <img
         alt=""
