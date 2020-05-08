@@ -11,6 +11,7 @@ const WIDTH = HEIGHT * 1.7778;
 const distanceList = [];
 const nameList = [];
 const genderList = [];
+const expressionList = [];
 let updateCount = 0;
 
 const mode = (arr) => {
@@ -41,17 +42,17 @@ const get_faces = () => {
     });
 };
 
-// const get_expression_value = (raw_expressions) => {
-//   const copiedExpression = raw_expressions;
-//   const expressions = Object.keys(copiedExpression).map((key) => {
-//     const value = copiedExpression[key];
-//     return value;
-//   });
-//   const max = Math.max(...expressions);
-//   return Object.keys(copiedExpression).filter((key) => {
-//     return copiedExpression[key] === max;
-//   })[0];
-// };
+const get_expression_value = (raw_expressions) => {
+  const copiedExpression = raw_expressions;
+  const expressions = Object.keys(copiedExpression).map((key) => {
+    const value = copiedExpression[key];
+    return value;
+  });
+  const max = Math.max(...expressions);
+  return Object.keys(copiedExpression).filter((key) => {
+    return copiedExpression[key] === max;
+  })[0];
+};
 
 export default function sketch(p) {
   let capture = null;
@@ -69,10 +70,12 @@ export default function sketch(p) {
       distanceList.pop();
       nameList.pop();
       genderList.pop();
+      expressionList.pop();
     }
     distanceList.push(bestMatch.distance);
     nameList.push(bestMatch.label.toString());
     genderList.push(person.gender);
+    expressionList.push(get_expression_value(person.expressions));
     updateCount++;
 
     if (distanceList.length > 10 && updateCount > 10) {
@@ -80,6 +83,7 @@ export default function sketch(p) {
         distance: mode(distanceList),
         name: mode(nameList),
         gender: mode(genderList),
+        expression: mode(expressionList),
       });
       updateCount = 0;
     }
