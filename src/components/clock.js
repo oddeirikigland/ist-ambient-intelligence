@@ -10,7 +10,7 @@ function ClockComp() {
 
   return (
     <div className="ClockComp">
-      <Clock value={state.date} />
+      <Clock value={state.date} size="200" />
     </div>
   );
 }
